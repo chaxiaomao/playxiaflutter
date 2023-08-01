@@ -27,18 +27,15 @@ class _FragmentComlistState extends State<FragmentComlist> {
   @override
   Widget build(BuildContext context) {
 
-    final appState = Provider.of<AppState>(context);
 
     return Stack(
       children: [
-        Text(S.of(context).app_name),
+        Text('List'),
         Center(
           child: SizedBox(
             width: 432,
             // height: customHeight(130.h),
             child: ElevatedButton(onPressed: () {
-
-              appState.setLocal(<Locale>[const Locale('zh', 'CN')]);
             }, child: const Text('切换老中')),
           ),
         )

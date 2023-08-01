@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+import 'package:wanxia/common/provider/app_state.dart';
 import 'package:wanxia/common/utils/screen.dart';
+import 'package:wanxia/generated/l10n.dart';
 
 
 class Login extends StatefulWidget {
@@ -20,18 +23,23 @@ class _LoginPageState extends State<Login> {
   @override
   Widget build(BuildContext context) {
 
-    return Center(
-      child: SizedBox(
-        width: setCustomWidth(375),
-        child: ElevatedButton(onPressed: () {
+    final appState = Provider.of<AppState>(context);
 
-        }, child: const Text('')),
-      ),
+    return Stack(
+      children: [
+        Text(S.of(context).app_name),
+        Center(
+          child: SizedBox(
+            width: 432,
+            // height: customHeight(130.h),
+            child: ElevatedButton(onPressed: () {
+
+              appState.setLocal(const Locale('zh', 'CN'));
+            }, child: const Text('切换老中')),
+          ),
+        )
+      ],
     );
-
-    // return Container(
-    //   child: Text(S.of(context).app_name, style: TextStyle(fontSize: customFontSize(24.sp)),),
-    // );
   }
 
 

@@ -21,9 +21,7 @@ Future<void> main() async {
         ),
       ],
       child: Consumer<AppState>(builder: (context, appState, _) {
-        print('11111111111111');
-        print(appState.local);
-        return App();
+        return App(); /// 不能加 const
       }),
     ),
   );
@@ -43,24 +41,24 @@ init() {
 class App extends StatelessWidget {
   const App({super.key});
 
-  // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
+
     // 设计稿尺寸 统一适配各种尺寸问题
     ScreenUtil.init(context, designSize: const Size(375, 812));
-    print('2222222222222');
-    print(appState.local);
+
     return MaterialApp(
-      // 多语言环境
+
+      /// 多语言
+      locale: appState.local,
       localizationsDelegates: const [
         S.delegate,
         GlobalMaterialLocalizations.delegate,
         GlobalWidgetsLocalizations.delegate,
         GlobalCupertinoLocalizations.delegate,
       ],
-      supportedLocales: appState.local,
-      // supportedLocales: S.delegate.supportedLocales,
-      // supportedLocales: const <Locale>[Locale('zh', 'CN')],
+      supportedLocales: S.delegate.supportedLocales,
+      /// 多语言
 
       title: 'Flutter Demo',
 
@@ -72,15 +70,10 @@ class App extends StatelessWidget {
       ),
       home: const SafeArea(
         child: Scaffold(
-          // appBar: PreferredSize(
-          //     preferredSize: Size.fromHeisght(55s),
-          //     child: AppBar(
-          //       backgroundColor: Colors.red,
-          //       title: const Text('Hide Status Bar'),
-          //     )),
           body: Home(),
         ),
       ),
     );
   }
+
 }

@@ -1,12 +1,15 @@
 
-double customHeight(double h) {
-  return h;
+import 'package:flutter_screenutil/flutter_screenutil.dart';
+
+double setCustomHeight(double h) {
+  return ScreenUtil().setHeight(h);
 }
 
-double customWidth(double w) {
-  return w;
+double setCustomWidth(double w) {
+
+  return ScreenUtil().setWidth(w);
 }
 
-double customFontSize(double s) {
-  return s;
+double setCustomFontSize(double s) {
+  return ScreenUtil().setSp(s);
 }

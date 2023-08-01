@@ -86,5 +86,52 @@ class App extends StatelessWidget {
         ),
       ),
     );
+
+
+    // return ScreenUtilInit(
+    //   designSize: const Size(1080, 720),
+    //   minTextAdapt: true,
+    //   splitScreenMode: true,
+    //   builder: (context , child) {
+    //     return MaterialApp(
+    //
+    //       // 多语言环境
+    //       localizationsDelegates: const [
+    //         S.delegate,
+    //         GlobalMaterialLocalizations.delegate,
+    //         GlobalWidgetsLocalizations.delegate,
+    //         GlobalCupertinoLocalizations.delegate,
+    //       ],
+    //       supportedLocales: S.delegate.supportedLocales,// supportedLocales: const <Locale>[Locale('zh', 'CN')],
+    //
+    //       // 取消debug彩带
+    //       debugShowCheckedModeBanner: false,
+    //
+    //       title: 'Play xia flutter',
+    //
+    //       // You can use the library anywhere in the app even in theme
+    //       theme: ThemeData(
+    //         primarySwatch: Colors.blue,
+    //         colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
+    //         textTheme: Typography.englishLike2018.apply(fontSizeFactor: 1.sp),
+    //       ),
+    //
+    //       home: child,
+    //     );
+    //   },
+    //   child: const SafeArea(
+    //     child: Scaffold(
+    //       // appBar: PreferredSize(
+    //       //     preferredSize: Size.fromHeisght(55s),
+    //       //     child: AppBar(
+    //       //       backgroundColor: Colors.red,
+    //       //       title: const Text('Hide Status Bar'),
+    //       //     )),
+    //       body: Home(),
+    //     ),
+    //   ),
+    // );
+
+
   }
 }

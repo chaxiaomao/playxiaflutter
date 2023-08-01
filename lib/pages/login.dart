@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:wanxia/common/widgets/kz_app_bar.dart';
-import 'package:wanxia/generated/l10n.dart';
+import 'package:wanxia/common/utils/screen.dart';
 
 
 class Login extends StatefulWidget {
@@ -20,9 +19,19 @@ class _LoginPageState extends State<Login> {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      child: Text(S.of(context).app_name),
+
+    return Center(
+      child: SizedBox(
+        width: setCustomWidth(375),
+        child: ElevatedButton(onPressed: () {
+
+        }, child: const Text('')),
+      ),
     );
+
+    // return Container(
+    //   child: Text(S.of(context).app_name, style: TextStyle(fontSize: customFontSize(24.sp)),),
+    // );
   }
 
 

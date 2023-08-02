@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 import 'package:provider/provider.dart';
 import 'package:wanxia/common/provider/app_state.dart';
 import 'package:wanxia/generated/l10n.dart';
@@ -27,16 +28,17 @@ class _FragmentComlistState extends State<FragmentComlist> {
   @override
   Widget build(BuildContext context) {
 
-
+    final appState = Provider.of<AppState>(context);
     return Stack(
       children: [
-        Text('List'),
+        Text(S.of(context).app_name),
         Center(
           child: SizedBox(
             width: 432,
             // height: customHeight(130.h),
             child: ElevatedButton(onPressed: () {
-            }, child: const Text('切换老中')),
+              context.push('/detail');
+            }, child: const Text('Detail')),
           ),
         )
       ],

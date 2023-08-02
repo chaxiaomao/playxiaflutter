@@ -1,17 +1,42 @@
 import 'package:flutter/material.dart';
 
-/// 系统相应状态
+/// APP 语言/主题/路由重定向等状态变量
+/// 根节点消费
+/// 根节点重载
 class AppState with ChangeNotifier {
+  Locale ?local;
+  ThemeData ?themeData;
+  bool isNeedLogin;
 
-  Locale _local = const Locale('en', 'US');
+  AppState({this.local, this.themeData, this.isNeedLogin = false});
 
-  AppState() {}
+  // AppState() {
+  //   _local = const Locale('zh', 'CN');
+  //   _isNeedLogin = false;
+  //   _themeData = ThemeData(
+  //     colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
+  //     // useMaterial3: true,
+  //   );
+  // }
 
-  get local => _local;
+  // get local => _local;
+  //
+  // get isNeedLogin => _isNeedLogin;
+  //
+  // get themeData => _themeData;
 
-  setLocal(Locale locale) {
-    _local = locale;
+  setLocal(Locale l) {
+    local = l;
     notifyListeners();
   }
 
+  setIsNeedLogin(bool f) {
+    isNeedLogin = f;
+    notifyListeners();
+  }
+
+  setThemeData(ThemeData t) {
+    themeData = t;
+    notifyListeners();
+  }
 }

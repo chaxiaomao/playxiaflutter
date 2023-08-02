@@ -41,7 +41,7 @@ class _HomePageState extends State<Home> {
         onPageChanged: _handlePageChanged,
         children: const <Widget>[
           FragmentComlist(),
-          Login(),
+          FragmentComlist(),
           FragmentComlist(),
           FragmentComlist(),
         ],

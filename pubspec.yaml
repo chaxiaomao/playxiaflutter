@@ -35,7 +35,8 @@ dependencies:
   flutter:
     sdk: flutter
 
-  # UI
+  ### 网络
+  dio: ^5.3.2
 
   ### 尺寸适配
   flutter_screenutil: ^5.8.4

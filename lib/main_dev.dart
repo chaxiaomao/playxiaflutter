@@ -7,7 +7,7 @@ import 'package:wanxia/common/provider/provider.dart';
 import 'package:wanxia/app.dart';
 import 'package:wanxia/common/global_service.dart';
 Future<void> main() async {
-  EnvironmentBuild.init(flavor: BuildFlavor.production);
+  EnvironmentBuild.init(flavor: BuildFlavor.development);
   await GlobalService.init();
   runApp(
     MultiProvider(

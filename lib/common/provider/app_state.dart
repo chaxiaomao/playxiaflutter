@@ -6,9 +6,8 @@ import 'package:flutter/material.dart';
 class AppState with ChangeNotifier {
   Locale ?local;
   ThemeData ?themeData;
-  bool isNeedLogin;
 
-  AppState({this.local, this.themeData, this.isNeedLogin = false});
+  AppState({this.local, this.themeData});
 
   // AppState() {
   //   _local = const Locale('zh', 'CN');
@@ -27,11 +26,6 @@ class AppState with ChangeNotifier {
 
   setLocal(Locale l) {
     local = l;
-    notifyListeners();
-  }
-
-  setIsNeedLogin(bool f) {
-    isNeedLogin = f;
     notifyListeners();
   }
 

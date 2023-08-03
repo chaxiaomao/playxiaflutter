@@ -2,12 +2,12 @@ import 'dart:convert';
 import 'package:shared_preferences/shared_preferences.dart';
 
 /// 本地存储
-class Storage {
-  static final Storage _instance = Storage._();
-  factory Storage() => _instance;
+class LocalStorage {
+  static final LocalStorage _instance = LocalStorage._();
+  factory LocalStorage() => _instance;
   static late SharedPreferences _prefs;
 
-  Storage._();
+  LocalStorage._();
 
   static Future<void> init() async {
     _prefs = await SharedPreferences.getInstance();

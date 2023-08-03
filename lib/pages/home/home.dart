@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:wanxia/pages/demo/detail1.dart';
 import 'package:wanxia/pages/home/fragment_comlist.dart';
-import 'package:wanxia/pages/login.dart';
+import 'package:wanxia/pages/user/login.dart';
 
 class Home extends StatefulWidget {
   const Home({super.key});
@@ -41,7 +42,7 @@ class _HomePageState extends State<Home> {
         onPageChanged: _handlePageChanged,
         children: const <Widget>[
           FragmentComlist(),
-          FragmentComlist(),
+          Detail1(),
           FragmentComlist(),
           FragmentComlist(),
         ],

@@ -37,6 +37,7 @@ dependencies:
 
   ### 网络
   dio: ^5.3.2
+  dio_cookie_manager: 3.1.0+1
 
   ### 尺寸适配
   flutter_screenutil: ^5.8.4

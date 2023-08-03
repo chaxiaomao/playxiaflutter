@@ -14,7 +14,7 @@ class GlobalService {
   static GlobalKey<NavigatorState> navigatorKey = GlobalKey();
 
   /// 内置存储
-  static late LocalStorage _storage;
+  // static late LocalStorage _storage;
 
   /// 应用状态,
   static AppState appState = AppState(
@@ -29,7 +29,7 @@ class GlobalService {
 
   static Future init() async {
     WidgetsFlutterBinding.ensureInitialized();
-    await LocalStorage.init();
+    // await LocalStorage.init();
 
     /// 透明状态栏
     if (Platform.isAndroid) {

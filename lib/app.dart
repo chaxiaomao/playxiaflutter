@@ -3,10 +3,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:provider/provider.dart';
-import 'package:wanxia/common/global_service.dart';
 import 'package:wanxia/common/provider/app_state.dart';
 import 'package:wanxia/generated/l10n.dart';
-import 'package:wanxia/common/router/go_routing.dart';
+import 'package:wanxia/go_routing.dart';
 
 // final GlobalKey navigatorKey = GlobalKey();
 

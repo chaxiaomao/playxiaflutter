@@ -1,10 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:go_router/go_router.dart';
-import 'package:wanxia/common/global_service.dart';
 import 'package:wanxia/pages/demo/detail.dart';
 import 'package:wanxia/pages/home/home.dart';
 import 'package:wanxia/pages/user/login.dart';
+
+import 'app_service.dart';
 
 /// The route configuration.
 GoRouter getGoRouting(BuildContext context) {
@@ -12,7 +13,7 @@ GoRouter getGoRouting(BuildContext context) {
   // final authState = Provider.of<AuthState>(context);
 
   return GoRouter(
-    navigatorKey: GlobalService.navigatorKey,
+    navigatorKey: AppService.navigatorKey,
     redirect: (BuildContext context, GoRouterState state) async {
 
       // if (authState.isNeedLogin) {

@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 class AuthState with ChangeNotifier {
 
   /// 用户信息
-  String name = 'ding dong ji';
+  String name = '';
 
   /// example
   bool isNeedLogin;

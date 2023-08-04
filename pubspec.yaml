@@ -38,12 +38,16 @@ dependencies:
   ### 网络
   dio: ^5.3.2
   dio_cookie_manager: 3.1.0+1
+  dio_cache_interceptor: ^3.4.2
 
   ### 尺寸适配
   flutter_screenutil: ^5.8.4
 
   ### 状态管理
   provider: ^6.0.5
+
+  ###UI
+  fluttertoast: ^8.2.2
 
   ### storage + cache
   shared_preferences: ^2.2.0

@@ -1,12 +1,11 @@
 import 'dart:async';
-import 'dart:io';
 import 'package:dio/dio.dart';
 import 'package:cookie_jar/cookie_jar.dart';
+import 'package:dio_cache_interceptor/dio_cache_interceptor.dart';
 import 'package:dio_cookie_manager/dio_cookie_manager.dart';
 import 'package:wanxia/common/dio/auth_interceptor.dart';
-import 'package:wanxia/common/dio/http_cache.dart';
 import 'package:wanxia/common/env.dart';
-import 'package:wanxia/common/values/config.dart';
+import 'package:wanxia/common/values/http.dart';
 
 /*
   * http 操作类
@@ -25,8 +24,35 @@ class Http {
   late Dio dio;
   CancelToken cancelToken = CancelToken();
 
-  Http._internal() {
+  // cache options
+  final cacheOptions = CacheOptions(
+    // A default store is required for interceptor.
+    store: MemCacheStore(),
 
+    // All subsequent fields are optional.
+
+    // Default.
+    policy: CachePolicy.request,
+    // Returns a cached response on error but for statuses 401 & 403.
+    // Also allows to return a cached response on network errors (e.g. offline usage).
+    // Defaults to [null].
+    // hitCacheOnErrorExcept: [401, 403],
+    // Overrides any HTTP directive to delete entry past this duration.
+    // Useful only when origin server has no cache config or custom behaviour is desired.
+    // Defaults to [null].
+    maxStale: const Duration(days: 3),
+    // Default. Allows 3 cache sets and ease cleanup.
+    priority: CachePriority.normal,
+    // Default. Body and headers encryption with your own algorithm.
+    cipher: null,
+    // Default. Key builder to retrieve requests.
+    keyBuilder: CacheOptions.defaultCacheKeyBuilder,
+    // Default. Allows to cache POST requests.
+    // Overriding [keyBuilder] is strongly recommended when [true].
+    allowPostMethod: false,
+  );
+
+  Http._internal() {
     // BaseOptions、Options、RequestOptions 都可以配置参数，优先级别依次递增，且可以根据优先级别覆盖参数
     BaseOptions options = BaseOptions(
       // 请求基地址,可以包含子路径
@@ -68,7 +94,8 @@ class Http {
     dio.interceptors.add(AuthInterceptor());
 
     // 加内存缓存
-    dio.interceptors.add(HttpCache());
+    // dio.interceptors.add(HttpCache());
+    dio.interceptors.add(DioCacheInterceptor(options: cacheOptions));
 
     // 在调试模式下需要抓包调试，所以我们使用代理，并禁用HTTPS证书校验
     //   if (!Global.isRelease && PROXY_ENABLE) {
@@ -82,56 +109,43 @@ class Http {
     //     };
     //   }
     // }
+  }
 
-    /*
+  /*
    * 取消请求
    *
    * 同一个cancel token 可以用于多个请求，当一个cancel token取消时，所有使用该cancel token的请求都会被取消。
    * 所以参数可选
    */
-    void cancelRequests(CancelToken token) {
-      token.cancel("cancelled");
-    }
-
-    /// restful get 操作
-    /// refresh 是否下拉刷新 默认 false
-    /// noCache 是否不缓存 默认 false
-    /// list 是否列表 默认 false
-    /// cacheKey 缓存key
-    /// cacheDisk 是否磁盘缓存
-    /// https://github.com/llfbandit/dio_cache_interceptor
-    Future get(
-      String path, {
-      dynamic params,
-      Options? options,
-      bool refresh = false,
-      bool noCache = false,
-      bool list = false,
-      String? cacheKey,
-      bool cacheDisk = false,
-    }) async {
-      Options requestOptions = options ?? Options();
-      requestOptions = requestOptions.copyWith(extra: {
-        "refresh": refresh,
-        "noCache": noCache,
-        "list": list,
-        "cacheKey": cacheKey,
-        "cacheDisk": cacheDisk,
-      });
-
-      var response = await dio.get(path, queryParameters: params, options: requestOptions, cancelToken: cancelToken);
-      return response.data;
-    }
-
-    /// restful post 操作
-    Future post(
-      String path, {
-      dynamic params,
-      Options? options,
-    }) async {
-      Options requestOptions = options ?? Options();
-      var response = await dio.post(path, data: params, options: requestOptions, cancelToken: cancelToken);
-      return response.data;
-    }
+  void cancelRequests(CancelToken token) {
+    token.cancel("cancelled");
   }
+
+  /// https://github.com/llfbandit/dio_cache_interceptor
+  Future get(
+    String path, {
+    dynamic params,
+    Options? options,
+    bool refresh = false,
+  }) async {
+    Options requestOptions = options ?? Options();
+    // requestOptions = requestOptions.copyWith();
+    if (refresh == true) {
+      cacheOptions.copyWith(policy: CachePolicy.refresh);
+    }
+
+    var response = await dio.get(path, queryParameters: params, options: requestOptions, cancelToken: cancelToken);
+    return response.data;
+  }
+
+  Future post(
+    String path, {
+    dynamic params,
+    Options? options,
+  }) async {
+    Options requestOptions = options ?? Options();
+    var response = await dio.post(path, data: params, options: requestOptions, cancelToken: cancelToken);
+    return response.data;
+  }
+
 }

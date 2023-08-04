@@ -1,8 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:go_router/go_router.dart';
-import 'package:provider/provider.dart';
-import 'package:wanxia/common/provider/app_state.dart';
-import 'package:wanxia/generated/l10n.dart';
+
 class FragmentComlist extends StatefulWidget {
   const FragmentComlist({super.key});
 
@@ -10,13 +7,41 @@ class FragmentComlist extends StatefulWidget {
   State<FragmentComlist> createState() => _FragmentComlistState();
 }
 
-class _FragmentComlistState extends State<FragmentComlist> {
-
+class _FragmentComlistState extends State<FragmentComlist> with SingleTickerProviderStateMixin {
+  late TabController _tabController;
+  int _workTypeIndex = 0;
+  final List<Map<String, dynamic>> _workType = [
+    {
+      "label": '按时结算',
+      "value": 1,
+    },
+    {
+      "label": '按月结算',
+      "value": 2,
+    }
+  ];
 
   @override
   void initState() {
     super.initState();
+    _initTabController();
+  }
 
+  // tabController初始化
+  void _initTabController() {
+    _tabController = TabController(length: _workType.length, vsync: this);
+    _tabController.addListener(() {
+      setState(() => _workTypeIndex = _tabController.index);
+
+      //点击tab回调一次，滑动切换tab不会回调
+      // if(_tabController.indexIsChanging){
+      //   print("ysl--${_tabController.index}");
+      // }
+
+      //点击tab时或滑动tab回调一次
+      // if(_tabController.index.toDouble() == _tabController.animation.value){
+      // }
+    });
   }
 
   @override
@@ -24,33 +49,35 @@ class _FragmentComlistState extends State<FragmentComlist> {
     super.dispose();
   }
 
-
   @override
   Widget build(BuildContext context) {
-
-    final appState = Provider.of<AppState>(context);
-    return Stack(
-      children: [
-        Text(S.of(context).app_name),
-        Center(
-          child: SizedBox(
-            width: 432,
-            // height: customHeight(130.h),
-            child: ElevatedButton(onPressed: () {
-              context.push('/detail');
-            }, child: const Text('Detail')),
-          ),
-        )
-      ],
+    return DefaultTabController(
+      //tabBar初始化控制器
+      length: _workType.length,
+      initialIndex: 0,
+      child: Scaffold(
+        appBar: AppBar(
+          centerTitle: true,
+          title: _tab(),
+        ),
+      ),
     );
-
-    // return SizedBox(
-    //   width: customWidth(30.w),
-    //   height: customHeight(30.h),
-    //   child: ElevatedButton(onPressed: () {
-    //
-    //   }, child: const Text('an niu')),
-    // );
   }
 
+  ///Tab
+  _tab() {
+    return SizedBox(
+        width: 186,
+        height: AppBar().preferredSize.height,
+        child: PreferredSize(
+          preferredSize: const Size.fromHeight(30),
+          child: TabBar(
+            controller: _tabController,
+            indicatorWeight: 3.0,
+            indicatorColor: Colors.white,
+            indicatorSize: TabBarIndicatorSize.label,
+            tabs: _workType.map((e) => Tab(text: e['label'])).toList(),
+          ),
+        ));
+  }
 }

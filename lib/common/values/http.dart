@@ -1,9 +1,7 @@
-/// 公有的配置值
 
 // 网络请求
 const CONNECT_TIMEOUT = Duration(seconds: 10);
 const RECEIVE_TIMEOUT = Duration(seconds: 5);
-const PAGE_SIZE = 15;
 
 // 是否启用缓存
 // const CACHE_ENABLE = false;

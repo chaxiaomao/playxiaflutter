@@ -23,14 +23,14 @@ GoRouter getGoRouting(BuildContext context) {
     },
     routes: <RouteBase>[
       GoRoute(
-        path: '/',
+        path: Home.routeName,
         builder: (BuildContext context, GoRouterState state) {
           // state.queryParams['filter']
           return const SafeArea(child: Home());
         },
       ),
       GoRoute(
-        path: '/login',
+        path: Login.routeName,
         builder: (context, state) => const Login(),
       ),
       GoRoute(

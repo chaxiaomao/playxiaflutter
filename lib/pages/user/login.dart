@@ -7,6 +7,7 @@ import 'package:wanxia/generated/l10n.dart';
 
 class Login extends StatefulWidget {
   const Login({super.key});
+  static const String routeName = '/login';
 
   @override
   State<Login> createState() => _LoginPageState();

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:wanxia/common/values/values.dart';
 
 class FragmentComlist extends StatefulWidget {
   const FragmentComlist({super.key});
@@ -56,9 +57,12 @@ class _FragmentComlistState extends State<FragmentComlist> with SingleTickerProv
       length: _workType.length,
       initialIndex: 0,
       child: Scaffold(
-        appBar: AppBar(
-          centerTitle: true,
-          title: _tab(),
+        appBar: PreferredSize(
+          preferredSize: const Size.fromHeight(AppUi.appBarHeight),
+          child: AppBar(
+            centerTitle: true,
+            title: _tab(),
+          ),
         ),
       ),
     );
@@ -68,10 +72,16 @@ class _FragmentComlistState extends State<FragmentComlist> with SingleTickerProv
   _tab() {
     return SizedBox(
         width: 186,
-        height: AppBar().preferredSize.height,
+        height: AppUi.appBarHeight,
         child: PreferredSize(
           preferredSize: const Size.fromHeight(30),
           child: TabBar(
+            splashFactory: NoSplash.splashFactory,
+            overlayColor: MaterialStateProperty.resolveWith<Color?>(
+              (Set<MaterialState> states) {
+                return states.contains(MaterialState.focused) ? null : Colors.transparent;
+              },
+            ),
             controller: _tabController,
             indicatorWeight: 3.0,
             indicatorColor: Colors.white,

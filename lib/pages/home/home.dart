@@ -1,15 +1,16 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import 'package:wanxia/common/utils/screen_util.dart';
 import 'package:wanxia/common/values/values.dart';
 import 'package:wanxia/pages/demo/detail1.dart';
 import 'package:wanxia/pages/home/fragment_comlist.dart';
-import 'package:wanxia/pages/user/login.dart';
+import 'package:wanxia/provider/provider.dart';
 
 class Home extends StatefulWidget {
   const Home({super.key});
-  static const String routeName = '/';
 
+  static const String routeName = '/';
 
   @override
   State<Home> createState() => _HomePageState();
@@ -17,83 +18,117 @@ class Home extends StatefulWidget {
 
 class _HomePageState extends State<Home> {
 
-  int _bottomTabIndex = 0;
+  // 底部菜单选中
+  int bottomTabIndex = 0;
 
-  late PageController _pageController;
+  late PageController pageController;
 
-  final _bottomNavigationBars = const <BottomNavigationBarItem>[
-    BottomNavigationBarItem(icon: Icon(Icons.home), label: "首页"),
-    BottomNavigationBarItem(icon: Icon(Icons.business), label: "底部底部2"),
-    BottomNavigationBarItem(icon: Icon(Icons.school), label: "底部底部3"),
-    BottomNavigationBarItem(icon: Icon(Icons.school), label: "底部底部4"),
+  final fragments = <Widget>[
+    const FragmentComlist(),
+    const Detail1(),
+    const FragmentComlist(),
+    const FragmentComlist(),
   ];
 
   @override
   void initState() {
     super.initState();
-    _pageController = PageController(initialPage: _bottomTabIndex);
+    pageController = PageController(initialPage: bottomTabIndex);
   }
 
   @override
   void dispose() {
-    _pageController.dispose();
+    pageController.dispose();
     super.dispose();
   }
 
   void _handlePageChanged(int index) {
-    setState(() => _bottomTabIndex = index);
-  }
-
-  _bottomNav() {
-    return CupertinoTabBar(
-      items: _bottomNavigationBars,
-      currentIndex: _bottomTabIndex,
-      height: setCustomHeight(AppUi.appBottomNavHeight),
-      iconSize: setCustomFontSize(AppUi.appBottomNavIconSize),
-      border: const Border(
-        top: BorderSide(
-          color: AppUi.primaryText,
-          width: 0.3, // 0.0 means one physical pixel
-        ),
-      ),
-      onTap: (i) => _pageController.jumpToPage(i),
-
-    );
-  }
-
-  _bottomNav2() {
-    return  BottomNavigationBar(
-      items: _bottomNavigationBars,
-      currentIndex: _bottomTabIndex,
-      type: BottomNavigationBarType.fixed,
-      selectedFontSize: setCustomFontSize(AppUi.appBottomNavFontSize),
-      unselectedFontSize: setCustomFontSize(AppUi.appBottomNavFontSize),
-      iconSize: setCustomFontSize(AppUi.appBottomNavIconSize),
-      onTap: (i) => _pageController.jumpToPage(i),
-    );
+    setState(() => bottomTabIndex = index);
   }
 
   @override
   Widget build(BuildContext context) {
-
     return Scaffold(
       body: PageView(
         physics: const NeverScrollableScrollPhysics(),
-        controller: _pageController,
+        controller: pageController,
         onPageChanged: _handlePageChanged,
-        children: const <Widget>[
-          FragmentComlist(),
-          Detail1(),
-          FragmentComlist(),
-          FragmentComlist(),
-        ],
+        children: fragments,
       ),
-
-      bottomNavigationBar: _bottomNav(),
-
+      bottomNavigationBar: _bottomNav(style: 1),
     );
-
   }
 
+  // 底部菜单 1:ios样
+  Widget _bottomNav({style = 1}) {
+    List<BottomNavigationBarItem> bottomTabItems = [
+      const BottomNavigationBarItem(icon: Icon(Icons.home), label: "首页"),
+      BottomNavigationBarItem(
+        icon: Stack(
+          alignment: AlignmentDirectional.topEnd,
+          children: [const Icon(Icons.home), _badge()],
+        ),
+        label: "消息",
+      ),
+      const BottomNavigationBarItem(icon: Icon(Icons.home), label: "积分"),
+      const BottomNavigationBarItem(icon: Icon(Icons.home), label: "我的"),
+    ];
+    if (style == 1) {
+      return CupertinoTabBar(
+        items: bottomTabItems,
+        currentIndex: bottomTabIndex,
+        // height: setCustomHeight(AppStyle.appBottomNavHeight),
+        iconSize: setCustomFontSize(AppStyle.appBottomNavIconSize),
+        // border: const Border(
+        //   top: BorderSide(
+        //     color: AppStyle.primaryText,
+        //     width: 0.3, // 0.0 means one physical pixel
+        //   ),
+        // ),
+        onTap: (i) => pageController.jumpToPage(i),
+      );
+    }
+    return BottomNavigationBar(
+      items: bottomTabItems,
+      currentIndex: bottomTabIndex,
+      type: BottomNavigationBarType.fixed,
+      // selectedFontSize: setCustomFontSize(AppStyle.appBottomNavFontSize),
+      // unselectedFontSize: setCustomFontSize(AppStyle.appBottomNavFontSize),
+      // iconSize: setCustomFontSize(AppStyle.appBottomNavIconSize),
+      onTap: (i) => pageController.jumpToPage(i),
+    );
+  }
+
+
+  // 底部菜单消息小红点
+  Widget _badge() {
+    final authState = Provider.of<AuthState>(context);
+    int unreadMsg = authState.unreadMsg;
+    return unreadMsg == 0
+        ? const SizedBox(height: 14, width: 14)
+        : Container(
+      height: 14,
+      width: 14,
+      decoration: BoxDecoration(
+        color: Colors.red,
+        borderRadius: BorderRadius.circular(12),
+      ),
+      constraints: const BoxConstraints(
+        minWidth: 14,
+        minHeight: 14,
+      ),
+      child: Center(
+        child: Text(
+          authState.unreadMsg.toString(),
+          style: const TextStyle(
+            color: Colors.white,
+            fontSize: 8,
+          ),
+          textAlign: TextAlign.center,
+          overflow: TextOverflow.visible,
+        ),
+      ),
+    );
+  }
 
 }

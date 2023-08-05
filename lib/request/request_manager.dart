@@ -1,10 +1,10 @@
 
-import 'package:wanxia/api/dio/http.dart';
+import 'package:wanxia/request/dio/dio_client.dart';
 
-class ApiManager {
-  static final ApiManager _instance = ApiManager._();
-  ApiManager._();
-  factory ApiManager() => _instance;
+class RequestManager {
+  static final RequestManager _instance = RequestManager._();
+  RequestManager._();
+  factory RequestManager() => _instance;
   static final _httpClient = DioClient();
   
   Future getComDetailV2(int cid) async {

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:provider/provider.dart';
 import 'package:wanxia/app_service.dart';
 import 'package:wanxia/provider/auth_state.dart';
@@ -33,7 +34,7 @@ class _DetailPageState extends BaseViewState<Detail1> {
         Text(authState.name),
         Center(
           child: SizedBox(
-            width: 375,
+            width: 375.w,
             // height: customHeight(130.h),
             child: ElevatedButton(onPressed: () {
 

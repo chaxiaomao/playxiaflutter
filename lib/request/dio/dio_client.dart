@@ -3,10 +3,11 @@ import 'package:dio/dio.dart';
 import 'package:cookie_jar/cookie_jar.dart';
 import 'package:dio_cache_interceptor/dio_cache_interceptor.dart';
 import 'package:dio_cookie_manager/dio_cookie_manager.dart';
-import 'package:wanxia/api/api_config.dart';
 import 'package:wanxia/env.dart';
+import 'package:wanxia/request/http_config.dart';
 
-import 'auth_interceptor.dart';
+import 'dio_interceptor.dart';
+
 
 /*
   * http 操作类

@@ -4,7 +4,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:go_router/go_router.dart';
 import 'package:wanxia/provider/provider.dart';
-import 'package:wanxia/common/values/app_ui.dart';
 
 class AppService {
   // static final GlobalService _instance = GlobalService._();
@@ -22,7 +21,7 @@ class AppService {
   static AppState appState = AppState(
       local: const Locale('zh', 'CN'),
       themeData: ThemeData(
-        colorScheme: ColorScheme.fromSeed(seedColor: AppUi.primaryElement),
+        // colorScheme: ColorScheme.fromSeed(seedColor: AppStyle.primaryElement),
         // useMaterial3: true,
       ));
 

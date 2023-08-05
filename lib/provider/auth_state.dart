@@ -5,19 +5,20 @@ class AuthState with ChangeNotifier {
 
   /// 用户信息
   String name = '';
+  int unreadMsg = 0;
 
   /// example
-  bool isNeedLogin;
+  late bool isNeedLogin;
 
-  AuthState({this.isNeedLogin = false});
+  AuthState();
 
   setIsNeedLogin(bool f) {
     isNeedLogin = f;
     notifyListeners();
   }
 
-  setName(n) {
-    name = n;
+  updateUnreadMsg(int n) {
+    unreadMsg += n;
     notifyListeners();
   }
 

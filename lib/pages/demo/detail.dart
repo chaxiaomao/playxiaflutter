@@ -60,7 +60,6 @@ class _DetailPageState extends BaseViewState<Detail> {
             // height: customHeight(130.h),
             child: ElevatedButton(onPressed: () {
 
-              authState.setName('WWWWWWW');
 
               // appState.setLocal(Locale('en', 'US'));
 

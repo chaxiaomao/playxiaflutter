@@ -1,5 +1,5 @@
 import 'package:dio/dio.dart';
-import 'package:wanxia/api/api_config.dart';
+import 'package:wanxia/request/http_config.dart';
 import 'dart:convert';
 
 import 'package:wanxia/widgets/message.dart';

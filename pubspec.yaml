@@ -46,7 +46,7 @@ dependencies:
   ### 状态管理
   provider: ^6.0.5
 
-  ###UI
+  ###原生Toast
   fluttertoast: ^8.2.2
 
   ### storage + cache

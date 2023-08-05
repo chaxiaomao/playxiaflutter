@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-class AppUi {
+class AppStyle {
   static const Color primaryText = Color.fromARGB(255, 45, 45, 47);
   static const Color primaryElement = Color.fromARGB(255, 112, 171, 255);
   static const Color primaryElementText = Color.fromARGB(255, 255, 255, 255);
@@ -10,5 +10,5 @@ class AppUi {
   static const double appBarHeight = 40.0;
   static const double appBottomNavHeight = 64.0;
   static const double appBottomNavIconSize = 26.0;
-  static const double appBottomNavFontSize = 14.0;
+  static const double appBottomNavFontSize = 18.0;
 }

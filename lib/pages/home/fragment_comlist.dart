@@ -1,5 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import 'package:wanxia/common/values/values.dart';
+import 'package:wanxia/generated/l10n.dart';
+import 'package:wanxia/provider/provider.dart';
+import 'package:wanxia/widgets/bottom_navgiator_badge.dart';
 
 class FragmentComlist extends StatefulWidget {
   const FragmentComlist({super.key});
@@ -50,21 +54,43 @@ class _FragmentComlistState extends State<FragmentComlist> with SingleTickerProv
     super.dispose();
   }
 
+  BottomNavigationBadge badger = BottomNavigationBadge(
+      backgroundColor: Colors.red,
+      badgeShape: BottomNavigationBadgeShape.circle,
+      textColor: Colors.white,
+      position: BottomNavigationBadgePosition.topRight,
+      textSize: 8);
+
   @override
   Widget build(BuildContext context) {
+
+    final authState = Provider.of<AuthState>(context);
+    final appState = Provider.of<AppState>(context);
+
     return DefaultTabController(
       //tabBar初始化控制器
       length: _workType.length,
       initialIndex: 0,
-      child: Scaffold(
-        appBar: PreferredSize(
-          preferredSize: const Size.fromHeight(AppUi.appBarHeight),
-          child: AppBar(
-            centerTitle: true,
-            title: _tab(),
-          ),
-        ),
+      child: Row(
+        children: [
+          // Text(S.of(context).app_name),
+          ElevatedButton(onPressed: () {
+
+            // appState.setLocal(Locale('en', 'US'));
+            authState.updateUnreadMsg(1);
+
+          }, child: const Text('未读信息'))
+        ],
       ),
+      // child: Scaffold(
+      //   appBar: PreferredSize(
+      //     preferredSize: const Size.fromHeight(AppStyle.appBarHeight),
+      //     child: AppBar(
+      //       centerTitle: true,
+      //       title: _tab(),
+      //     ),
+      //   ),
+      // ),
     );
   }
 
@@ -72,7 +98,7 @@ class _FragmentComlistState extends State<FragmentComlist> with SingleTickerProv
   _tab() {
     return SizedBox(
         width: 186,
-        height: AppUi.appBarHeight,
+        height: AppStyle.appBarHeight,
         child: PreferredSize(
           preferredSize: const Size.fromHeight(30),
           child: TabBar(

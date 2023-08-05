@@ -3,9 +3,10 @@ import 'package:dio/dio.dart';
 import 'package:cookie_jar/cookie_jar.dart';
 import 'package:dio_cache_interceptor/dio_cache_interceptor.dart';
 import 'package:dio_cookie_manager/dio_cookie_manager.dart';
-import 'package:wanxia/common/dio/auth_interceptor.dart';
+import 'package:wanxia/api/api_config.dart';
 import 'package:wanxia/env.dart';
-import 'package:wanxia/common/values/http.dart';
+
+import 'auth_interceptor.dart';
 
 /*
   * http 操作类
@@ -16,10 +17,10 @@ import 'package:wanxia/common/values/http.dart';
   * 从2.1.x升级到 3.x
   * https://github.com/flutterchina/dio/blob/master/migration_to_3.0.md
 */
-class Http {
-  static final Http _instance = Http._internal();
+class DioClient {
+  static final DioClient _instance = DioClient._internal();
 
-  factory Http() => _instance;
+  factory DioClient() => _instance;
 
   late Dio dio;
   CancelToken cancelToken = CancelToken();
@@ -52,7 +53,7 @@ class Http {
     allowPostMethod: false,
   );
 
-  Http._internal() {
+  DioClient._internal() {
     // BaseOptions、Options、RequestOptions 都可以配置参数，优先级别依次递增，且可以根据优先级别覆盖参数
     BaseOptions options = BaseOptions(
       // 请求基地址,可以包含子路径

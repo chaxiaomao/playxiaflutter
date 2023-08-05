@@ -1,9 +1,8 @@
 import 'package:dio/dio.dart';
+import 'package:wanxia/api/api_config.dart';
 import 'dart:convert';
 
-import 'package:wanxia/common/widgets/message.dart';
-import 'package:wanxia/common/values/values.dart';
-
+import 'package:wanxia/widgets/message.dart';
 
 class AuthInterceptor extends InterceptorsWrapper {
 

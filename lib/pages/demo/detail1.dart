@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:wanxia/app_service.dart';
-import 'package:wanxia/common/provider/auth_state.dart';
+import 'package:wanxia/provider/auth_state.dart';
 import 'package:wanxia/pages/base_view.dart';
 
 

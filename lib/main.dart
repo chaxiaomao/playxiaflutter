@@ -3,7 +3,7 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:wanxia/env.dart';
-import 'package:wanxia/common/provider/provider.dart';
+import 'package:wanxia/provider/provider.dart';
 import 'package:wanxia/app.dart';
 
 import 'app_service.dart';

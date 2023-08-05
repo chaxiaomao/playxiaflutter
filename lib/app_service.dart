@@ -3,7 +3,7 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:go_router/go_router.dart';
-import 'package:wanxia/common/provider/provider.dart';
+import 'package:wanxia/provider/provider.dart';
 import 'package:wanxia/common/values/app_ui.dart';
 
 class AppService {

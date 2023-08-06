@@ -17,9 +17,8 @@ class Home extends StatefulWidget {
 }
 
 class _HomePageState extends State<Home> {
-
   // 底部菜单选中
-  int bottomTabIndex = 0;
+  int currentBottomTabIndex = 0;
 
   late PageController pageController;
 
@@ -33,7 +32,7 @@ class _HomePageState extends State<Home> {
   @override
   void initState() {
     super.initState();
-    pageController = PageController(initialPage: bottomTabIndex);
+    pageController = PageController(initialPage: currentBottomTabIndex);
   }
 
   @override
@@ -43,7 +42,7 @@ class _HomePageState extends State<Home> {
   }
 
   void _handlePageChanged(int index) {
-    setState(() => bottomTabIndex = index);
+    setState(() => currentBottomTabIndex = index);
   }
 
   @override
@@ -59,7 +58,7 @@ class _HomePageState extends State<Home> {
     );
   }
 
-  // 底部菜单 1:ios样
+  // 底部菜单
   Widget _bottomNav({style = 1}) {
     List<BottomNavigationBarItem> bottomTabItems = [
       const BottomNavigationBarItem(icon: Icon(Icons.home), label: "首页"),
@@ -76,9 +75,9 @@ class _HomePageState extends State<Home> {
     if (style == 1) {
       return CupertinoTabBar(
         items: bottomTabItems,
-        currentIndex: bottomTabIndex,
+        currentIndex: currentBottomTabIndex,
         // height: setCustomHeight(AppStyle.appBottomNavHeight),
-        iconSize: setCustomFontSize(AppStyle.appBottomNavIconSize),
+        // iconSize: setCustomFontSize(AppStyle.appBottomNavIconSize),
         // border: const Border(
         //   top: BorderSide(
         //     color: AppStyle.primaryText,
@@ -90,7 +89,7 @@ class _HomePageState extends State<Home> {
     }
     return BottomNavigationBar(
       items: bottomTabItems,
-      currentIndex: bottomTabIndex,
+      currentIndex: currentBottomTabIndex,
       type: BottomNavigationBarType.fixed,
       // selectedFontSize: setCustomFontSize(AppStyle.appBottomNavFontSize),
       // unselectedFontSize: setCustomFontSize(AppStyle.appBottomNavFontSize),
@@ -99,36 +98,36 @@ class _HomePageState extends State<Home> {
     );
   }
 
-
   // 底部菜单消息小红点
   Widget _badge() {
     final authState = Provider.of<AuthState>(context);
     int unreadMsg = authState.unreadMsg;
-    return unreadMsg == 0
-        ? const SizedBox(height: 14, width: 14)
-        : Container(
-      height: 14,
-      width: 14,
-      decoration: BoxDecoration(
-        color: Colors.red,
-        borderRadius: BorderRadius.circular(12),
-      ),
-      constraints: const BoxConstraints(
-        minWidth: 14,
-        minHeight: 14,
-      ),
-      child: Center(
-        child: Text(
-          authState.unreadMsg.toString(),
-          style: const TextStyle(
-            color: Colors.white,
-            fontSize: 8,
-          ),
-          textAlign: TextAlign.center,
-          overflow: TextOverflow.visible,
-        ),
-      ),
-    );
-  }
 
+    if (unreadMsg > 0) {
+      return Container(
+        width: setCustomWidth(14.0),
+        height: setCustomHeight(14.0),
+        decoration: BoxDecoration(
+          color: Colors.red,
+          borderRadius: BorderRadius.circular(12),
+        ),
+        constraints: BoxConstraints(
+          minWidth: setCustomWidth(14.0),
+          minHeight: setCustomHeight(14.0),
+        ),
+        child: Center(
+          child: Text(
+            authState.unreadMsg.toString(),
+            style: const TextStyle(
+              color: Colors.white,
+              fontSize: 8,
+            ),
+            textAlign: TextAlign.center,
+            overflow: TextOverflow.visible,
+          ),
+        ),
+      );
+    }
+    return SizedBox(height: setCustomHeight(14.0), width: setCustomWidth(14.0));
+  }
 }

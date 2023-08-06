@@ -1,137 +1,86 @@
-import 'dart:async';
-
 import 'package:flutter/material.dart';
-import 'package:flutter/rendering.dart';
-import 'package:flutter_localizations/flutter_localizations.dart';
-import 'package:wanxia/pages/home/home.dart';
-
-import 'generated/l10n.dart';
 
 void main() {
-
-  runZonedGuarded(() {
-
-      ErrorWidget.builder = (FlutterErrorDetails details) {
-        print('dddx');
-        Zone.current.handleUncaughtError(details.exception, details.stack!);
-
-        ///此处仅为展示，正规的实现方式参考 _defaultErrorWidgetBuilder 通过自定义 RenderErrorBox 实现
-        // return ErrorPage(details.exception.toString() + "\n " + details.stack.toString(), details);
-        return CustomErrorWidget(details);
-        print(details.exception.toString() + "\n " + details.stack.toString());
-      };
-      runApp(const App());
-  }, (Object error, StackTrace stack) {
-    print('Uncaught error: $error');
-    print("expectinTest zone error ${stack.toString()}");
-  });
-
-  // 以下两行 设置android状态栏为透明的沉浸。写在组件渲染之后，是为了在渲染后进行set赋值，覆盖状态栏，写在渲染之前MaterialApp组件会覆盖掉这个值。
-  // SystemUiOverlayStyle systemUiOverlayStyle = const SystemUiOverlayStyle(statusBarColor: Colors.transparent);
-  // SystemChrome.setSystemUIOverlayStyle(systemUiOverlayStyle);
+  runApp(MyApp());
 }
 
-class CustomErrorWidget extends StatelessWidget {
-  final FlutterErrorDetails errorDetails;
-
-  CustomErrorWidget(this.errorDetails);
-
+class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return Container(
-      color: Colors.red,
-      alignment: Alignment.center,
-      child: Text(
-        'Custom Error Widget: ${errorDetails.exception} from ${S.of(context).app_name}',
-        style: const TextStyle(color: Colors.white, fontSize: 16),
+    return MaterialApp(
+      home: Scaffold(
+        appBar: AppBar(title: Text('Toggle Down')),
+        body: Center(
+          child: ToggleWidget(),
+        ),
       ),
     );
   }
 }
 
-class App extends StatelessWidget {
-  const App({super.key});
+class ToggleWidget extends StatefulWidget {
+  @override
+  _ToggleWidgetState createState() => _ToggleWidgetState();
+}
 
-  // This widget is the root of your application.
+class _ToggleWidgetState extends State<ToggleWidget> {
+  bool _isToggled = false;
+
+  void _toggle() {
+    setState(() {
+      _isToggled = !_isToggled;
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-
-      // 多语言环境
-      localizationsDelegates: const [
-        S.delegate,
-        GlobalMaterialLocalizations.delegate,
-        GlobalWidgetsLocalizations.delegate,
-        GlobalCupertinoLocalizations.delegate,
-      ],
-      supportedLocales: S.delegate.supportedLocales,// supportedLocales: const <Locale>[Locale('zh', 'CN')],
-
-      title: 'Flutter Demo',
-
-      debugShowCheckedModeBanner: false,
-
-      theme: ThemeData(
-        colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
-        useMaterial3: true,
-      ),
-      home: const SafeArea(
-        child: Scaffold(
-          // appBar: PreferredSize(
-          //     preferredSize: Size.fromHeisght(55s),
-          //     child: AppBar(
-          //       backgroundColor: Colors.red,
-          //       title: const Text('Hide Status Bar'),
-          //     )),
-          body: Home(),
+    return Column(
+      children: [
+        Row(
+          children: [
+            GestureDetector(
+              onTap: _toggle,
+              child: Container(
+                width: 100,
+                height: 50,
+                color: Colors.blue,
+                alignment: Alignment.center,
+                child: Text(
+                  'Toggle Content',
+                  style: TextStyle(color: Colors.white),
+                ),
+              ),
+            ),
+          ],
         ),
-      ),
+
+
+        Stack(
+          children: [
+            AnimatedContainer(
+              duration: Duration(milliseconds: 200),
+              height: _isToggled ? 200 : 0,
+              child: _isToggled
+                  ? Transform.translate(
+                offset: Offset(0, 0),
+                child: Container(
+                  // width: 100,
+                  // height: 100,
+                  color: Colors.grey,
+                  alignment: Alignment.center,
+                  child: Text(
+                    'Additional Content',
+                    style: TextStyle(color: Colors.white),
+                  ),
+                ),
+              )
+                  : Container(),
+            ),
+            Text('ssss')
+
+          ],
+        ),
+      ],
     );
-
-
-    // return ScreenUtilInit(
-    //   designSize: const Size(1080, 720),
-    //   minTextAdapt: true,
-    //   splitScreenMode: true,
-    //   builder: (context , child) {
-    //     return MaterialApp(
-    //
-    //       // 多语言环境
-    //       localizationsDelegates: const [
-    //         S.delegate,
-    //         GlobalMaterialLocalizations.delegate,
-    //         GlobalWidgetsLocalizations.delegate,
-    //         GlobalCupertinoLocalizations.delegate,
-    //       ],
-    //       supportedLocales: S.delegate.supportedLocales,// supportedLocales: const <Locale>[Locale('zh', 'CN')],
-    //
-    //       // 取消debug彩带
-    //       debugShowCheckedModeBanner: false,
-    //
-    //       title: 'Play xia flutter',
-    //
-    //       // You can use the library anywhere in the app even in theme
-    //       theme: ThemeData(
-    //         primarySwatch: Colors.blue,
-    //         colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
-    //         textTheme: Typography.englishLike2018.apply(fontSizeFactor: 1.sp),
-    //       ),
-    //
-    //       home: child,
-    //     );
-    //   },
-    //   child: const SafeArea(
-    //     child: Scaffold(
-    //       // appBar: PreferredSize(
-    //       //     preferredSize: Size.fromHeisght(55s),
-    //       //     child: AppBar(
-    //       //       backgroundColor: Colors.red,
-    //       //       title: const Text('Hide Status Bar'),
-    //       //     )),
-    //       body: Home(),
-    //     ),
-    //   ),
-    // );
-
-
   }
 }

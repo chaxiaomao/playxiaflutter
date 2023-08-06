@@ -11,4 +11,8 @@ class AppStyle {
   static const double appBottomNavHeight = 64.0;
   static const double appBottomNavIconSize = 26.0;
   static const double appBottomNavFontSize = 18.0;
+
+  static const double unreadMsgDotWidth = 14.0;
+  static const double unreadMsgDotHeight = 14.0;
+  static const double unreadMsgDotFontSize = 8;
 }

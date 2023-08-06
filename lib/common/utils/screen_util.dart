@@ -9,7 +9,6 @@ double setCustomHeight(double h) {
 ///or instead of 375.w
 ///如果不需要像素转换 可直接返回
 double setCustomWidth(double w) {
-
   return ScreenUtil().setWidth(w);
 }
 
